@@ -29,6 +29,7 @@ Spring Boot
 - MySQL Driver
 - Lombok
 - Spring Configuration Processor
+
 그 외
 - QueryDSL
 - Tailwind CSS
