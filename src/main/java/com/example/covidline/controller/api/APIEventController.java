@@ -1,5 +1,10 @@
 package com.example.covidline.controller.api;
 
+import com.example.covidline.constant.ErrorCode;
+import com.example.covidline.dto.APIErrorResponse;
+import com.example.covidline.exception.GeneralException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,12 +15,14 @@ public class APIEventController {
     
     @GetMapping("/events")
     public List<String> getEvents() {
-        return List.of("event1", "event2");
+        throw new GeneralException("테스트 메시지");
+        //return List.of("event1", "event2");
     }
 
     @PostMapping("/events")
     public Boolean createEvent() {
-        return true;
+        throw new RuntimeException("runtime 테스트 메시지");
+        //return true;
     }
 
     @GetMapping("/events/{eventId}")
@@ -31,6 +38,20 @@ public class APIEventController {
     @DeleteMapping("/events/{eventId}")
     public Boolean removeEvent(@PathVariable Integer eventId){
         return true;
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<APIErrorResponse> general(GeneralException e) {
+        ErrorCode errorCode = e.getErrorCode();
+        HttpStatus status = errorCode.isClientSideError() ?
+                HttpStatus.BAD_REQUEST :
+                HttpStatus.INTERNAL_SERVER_ERROR;
+
+        return ResponseEntity
+                .status(status)
+                .body(APIErrorResponse.of(
+                   false, errorCode, errorCode.getMessage(e)
+                ));
     }
     
 }
