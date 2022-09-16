@@ -1,16 +1,26 @@
 package com.example.covidline.controller.api;
 
+import com.example.covidline.constant.PlaceType;
+import com.example.covidline.dto.APIDataResponse;
+import com.example.covidline.dto.PlaceDTO;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-//@RequestMapping("/api")
-//@RestController
+@RequestMapping("/api")
+@RestController
 public class APIPlaceController {
     
     @GetMapping("/places")
-    public List<String> getPlaces() {
-        return List.of("place1", "place2");
+    public APIDataResponse<List<PlaceDTO>> getPlaces() {
+        return APIDataResponse.of(List.of(PlaceDTO.of(
+            PlaceType.COMMON,
+            "랄라베드민턴장",
+            "서울시 강남구 강남대로 1234",
+            "010-1234-5678",
+            30,
+                "신장개업"
+        )));
     }
     
     @PostMapping("/places")
@@ -19,8 +29,19 @@ public class APIPlaceController {
     }
     
     @GetMapping("/places/{placeId}")
-    public String getPlace(@PathVariable Integer placeId) {
-        return "place" + placeId;
+    public APIDataResponse<PlaceDTO> getPlace(@PathVariable Integer placeId) {
+        if (placeId.equals(2)) {
+            return APIDataResponse.of(null);
+        }
+
+        return APIDataResponse.of(PlaceDTO.of(
+                PlaceType.COMMON,
+                "랄라베드민턴장",
+                "서울시 강남구 강남대로 1234",
+                "010-1234-5678",
+                30,
+                "신장개업"
+        ));
     }
     
     @PutMapping("/places/{placeId}")
