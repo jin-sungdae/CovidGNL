@@ -2,18 +2,23 @@ package com.example.covidline.controller.api;
 
 import com.example.covidline.constant.ErrorCode;
 import com.example.covidline.constant.EventStatus;
+import com.example.covidline.service.EventService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -22,6 +27,8 @@ class APIEventControllerTest {
 
     private final MockMvc mvc;
     private final ObjectMapper mapper;
+
+    @MockBean private EventService eventService;
 
     public APIEventControllerTest(@Autowired MockMvc mvc,
                                   @Autowired ObjectMapper mapper) {
@@ -33,6 +40,7 @@ class APIEventControllerTest {
    @Test
    void givenNothing_whenRequestEvents_thenReturnsListOfEventsInstandardResponse() throws Exception {
         // Given
+       given(eventService.getEvents(any(), any(), any(), any(), any())).willReturn(List.of(createEventDTO()));
 
        // When & Then
        mvc.perform(get("/api/events"))
@@ -52,4 +60,7 @@ class APIEventControllerTest {
                .andExpect(jsonPath("$.errorCode").value(ErrorCode.OK.getCode()))
                .andExpect(jsonPath("$.message").value(ErrorCode.OK.getMessage()));
    }
+
+    @DisplayName("[API][DELETE] 이벤트 삭제")
+    @Test
 }

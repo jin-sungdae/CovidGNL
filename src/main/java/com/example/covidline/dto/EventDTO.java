@@ -6,27 +6,29 @@ import com.example.covidline.constant.PlaceType;
 import java.time.LocalDateTime;
 
 public record EventDTO(
-        Long id,
-        PlaceDTO place,
+        Long placeId,
         String eventName,
         EventStatus eventStatus,
         LocalDateTime eventStartDatetime,
         LocalDateTime eventEndDatetime,
         Integer currentNumberOfPeople,
         Integer capacity,
-        String memo
+        String memo,
+        LocalDateTime createdAt,
+        LocalDateTime modifiedAt
 ) {
     public static EventDTO of(
-            Long id,
-            PlaceDTO place,
+            Long placeId,
             String eventName,
             EventStatus eventStatus,
             LocalDateTime eventStartDatetime,
             LocalDateTime eventEndDatetime,
             Integer currentNumberOfPeople,
             Integer capacity,
-            String memo
+            String memo,
+            LocalDateTime createdAt,
+            LocalDateTime modifiedAt
     ) {
-        return new EventDTO(id, place, eventName, eventStatus, eventStartDatetime, eventEndDatetime, currentNumberOfPeople, capacity, memo);
+        return new EventDTO(placeId, eventName, eventStatus, eventStartDatetime, eventEndDatetime, currentNumberOfPeople, capacity, memo, createdAt, modifiedAt);
     }
 }

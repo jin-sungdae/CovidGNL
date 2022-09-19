@@ -42,7 +42,7 @@ public record EventResponse(
     public static EventResponse from(EventDTO eventDto) {
         if (eventDto == null) { return null; }
         return EventResponse.of(
-                eventDto.id(),
+                eventDto.placeId(),
                 eventDto.eventName(),
                 eventDto.eventStatus(),
                 eventDto.eventStartDatetime(),

@@ -6,6 +6,8 @@ import com.example.covidline.dto.APIDataResponse;
 import com.example.covidline.dto.APIErrorResponse;
 import com.example.covidline.dto.EventResponse;
 import com.example.covidline.exception.GeneralException;
+import com.example.covidline.service.EventService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -14,10 +16,13 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@RequiredArgsConstructor
 @RequestMapping("/api")
 @RestController
 public class APIEventController {
-    
+
+    private final EventService eventService;
+
     @GetMapping("/events")
     public APIDataResponse<List<EventResponse>> getEvents() {
         return APIDataResponse.of(List.of(EventResponse.of(
@@ -28,7 +33,7 @@ public class APIEventController {
                 LocalDateTime.of(2021, 1, 1, 16,0,0),
                 0,
                 24,
-                "마스크를 꼭 착용하세요"
+                "마스크 꼭 착용하세요"
         )));
     }
 
