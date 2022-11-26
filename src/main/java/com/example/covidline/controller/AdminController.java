@@ -17,6 +17,9 @@ public class AdminController {
 
     @GetMapping("/places")
     public ModelAndView adminPlaces(
+            /*
+            @RequestParam - 기본값 (required = true) param이 있어야함
+             */
             @RequestParam(required = false) PlaceType placeType,
             String placeName,
             String address
