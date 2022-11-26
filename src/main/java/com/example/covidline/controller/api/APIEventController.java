@@ -4,18 +4,23 @@ import com.example.covidline.constant.ErrorCode;
 import com.example.covidline.constant.EventStatus;
 import com.example.covidline.dto.APIDataResponse;
 import com.example.covidline.dto.APIErrorResponse;
+import com.example.covidline.dto.EventRequest;
 import com.example.covidline.dto.EventResponse;
 import com.example.covidline.exception.GeneralException;
 import com.example.covidline.service.EventService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Validated
 @RequiredArgsConstructor
 @RequestMapping("/api")
 @RestController
@@ -24,23 +29,25 @@ public class APIEventController {
     private final EventService eventService;
 
     @GetMapping("/events")
-    public APIDataResponse<List<EventResponse>> getEvents() {
-        return APIDataResponse.of(List.of(EventResponse.of(
-                1L,
-                "오후 운동",
-                EventStatus.OPENED,
-                LocalDateTime.of(2021, 1, 1, 13, 0, 0),
-                LocalDateTime.of(2021, 1, 1, 16,0,0),
-                0,
-                24,
-                "마스크 꼭 착용하세요"
-        )));
+    public APIDataResponse<List<EventResponse>> getEvents(
+        @Positive Long placeId,
+        @Size(min = 2) String eventName,
+        EventStatus eventStatus,
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime eventStartDatetime,
+        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime eventEndDatetime
+    ) {
+        List<EventResponse> responses = eventService
+                .getEvents(placeId, eventName, eventStatus, eventStartDatetime, eventEndDatetime)
+                .stream().map(EventResponse::from).toList();
+        return APIDataResponse.of(responses);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/events")
-    public Boolean createEvent() {
-        throw new GeneralException("장군님");
-        //return true;
+    public APIDataResponse<String> createEvent(@Validated @RequestBody EventRequest eventRequest) {
+        boolean result = eventService.createEvent(eventRequest.toDTO());
+
+        return APIDataResponse.of(Boolean.toString(result));
     }
 
     @GetMapping("/events/{eventId}")

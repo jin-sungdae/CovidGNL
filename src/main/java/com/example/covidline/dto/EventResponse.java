@@ -7,8 +7,8 @@ import lombok.RequiredArgsConstructor;
 import java.time.LocalDateTime;
 
 
-public record EventResponse(
-        Long id,
+public record  EventResponse(
+        Long placeId,
         String eventName,
         EventStatus eventStatus,
         LocalDateTime eventStartDatetime,
@@ -18,7 +18,7 @@ public record EventResponse(
         String memo
 ) {
     public static EventResponse of(
-            Long id,
+            Long placeId,
             String eventName,
             EventStatus eventStatus,
             LocalDateTime eventStartDatetime,
@@ -28,7 +28,7 @@ public record EventResponse(
             String memo
     ) {
         return new EventResponse(
-                id,
+                placeId,
                 eventName,
                 eventStatus,
                 eventStartDatetime,
