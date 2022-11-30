@@ -165,10 +165,11 @@ class APIEventControllerTest {
    @Test
    void givenEventId_whenRequestingExistentEvent_thenReturnsEventInStandardResponse() throws Exception{
         // Given
-        long eventId = 1L;
+        Long eventId = 1L;
+
 
         // When
-       mvc.perform(get("/api/events" + eventId))
+       mvc.perform(get("/api/events/" + eventId))
                .andExpect(status().isOk())
                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                .andExpect(jsonPath("$.data").isMap())
@@ -177,10 +178,20 @@ class APIEventControllerTest {
                .andExpect(jsonPath("$.data.eventStatus").value(EventStatus.OPENED.name()))
                .andExpect(jsonPath("$.data.eventStartDatetime").value(LocalDateTime
                        .of(2021,1,1,13,0,0)
-                       .format(DateTimeFormatter.ISO_LOCAL_DATE)));
+                       .format(DateTimeFormatter.ISO_LOCAL_DATE)))
+               .andExpect(jsonPath("$.data[0].eventEndDatetime").value(LocalDateTime
+                       .of(2021,1,1,16,0,0)
+                       .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)))
+               .andExpect(jsonPath("$.data[0].currentNumberOfPeople").value(0))
+               .andExpect(jsonPath("$.data[0].capacity").value(24))
+               .andExpect(jsonPath("$.data[0].memo").value("마스크 꼭 착용하세요"))
+               .andExpect(jsonPath("$.success").value(true))
+               .andExpect(jsonPath("$.errorCode").value(ErrorCode.OK.getCode()))
+               .andExpect(jsonPath("$.message").value(ErrorCode.OK.getMessage()));
 
 
        // Then
+
    }
 
     @DisplayName("[API][DELETE] 이벤트 삭제")

@@ -51,9 +51,10 @@ public class APIEventController {
     }
 
     @GetMapping("/events/{eventId}")
-    public String getEvent(@PathVariable Integer eventId) {
-        throw new RuntimeException("런타임 에러");
-        //return "event" + eventId;
+    public APIDataResponse<EventResponse> getEvent(@PathVariable Long eventId) {
+        EventResponse eventResponse = EventResponse.from(eventService.getEvent(eventId).orElse(null));
+
+        return APIDataResponse.of(eventResponse);
     }
 
     @PutMapping("/events/{eventId}")
