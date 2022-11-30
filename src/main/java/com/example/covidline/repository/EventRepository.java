@@ -22,3 +22,6 @@ public interface EventRepository {
     default boolean updateEvent(Long eventId, EventDTO dto) { return false; }
     default boolean deleteEvent(Long eventId) { return false; }
 }
+
+
+

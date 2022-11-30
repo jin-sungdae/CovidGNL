@@ -44,7 +44,7 @@ class EventServiceTest {
 
     }
 
-    @DisplayName("검색 조건과 함께 이벤트 검색하면, 전체 결과를 출력하여 보여준다.")
+    @DisplayName("검색 조건과 함께 이벤트 검색하면, 검색된 결과를 출력하여 보여준다.")
     @Test
     void givenSearchParams_whenSearchingEvents_thenReturnsEventList() {
         Long placeId = 1L;

@@ -17,9 +17,7 @@ class APIDataResponseTest {
         String data = "test data";
 
         // When
-        APIDataResponse apiDataResponse = APIDataResponse.of(
-                data
-        );
+        APIDataResponse apiDataResponse = APIDataResponse.of(data);
 
         // Then
         assertThat(apiDataResponse)

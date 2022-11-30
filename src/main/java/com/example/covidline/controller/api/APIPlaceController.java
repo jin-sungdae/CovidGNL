@@ -3,6 +3,8 @@ package com.example.covidline.controller.api;
 import com.example.covidline.constant.PlaceType;
 import com.example.covidline.dto.APIDataResponse;
 import com.example.covidline.dto.PlaceDTO;
+import com.example.covidline.dto.PlaceResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,10 +22,10 @@ import java.util.List;
 @RequestMapping("/api")
 @RestController
 public class APIPlaceController {
-    
+
     @GetMapping("/places")
-    public APIDataResponse<List<PlaceDTO>> getPlaces() {
-        return APIDataResponse.of(List.of(PlaceDTO.of(
+    public APIDataResponse<List<PlaceResponse>> getPlaces() {
+        return APIDataResponse.of(List.of(PlaceResponse.of(
             PlaceType.COMMON,
             "랄라베드민턴장",
             "서울시 강남구 강남대로 1234",
@@ -32,19 +34,20 @@ public class APIPlaceController {
                 "신장개업"
         )));
     }
-    
+
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/places")
     public Boolean createPlace() {
         return true;
     }
     
     @GetMapping("/places/{placeId}")
-    public APIDataResponse<PlaceDTO> getPlace(@PathVariable Integer placeId) {
-        if (placeId.equals(2)) {
-            return APIDataResponse.of(null);
+    public APIDataResponse<PlaceResponse> getPlace(@PathVariable Long placeId) {
+        if (placeId.equals(2L)) {
+            return APIDataResponse.empty();
         }
 
-        return APIDataResponse.of(PlaceDTO.of(
+        return APIDataResponse.of(PlaceResponse.of(
                 PlaceType.COMMON,
                 "랄라베드민턴장",
                 "서울시 강남구 강남대로 1234",
