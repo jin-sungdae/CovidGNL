@@ -9,6 +9,7 @@ import com.example.covidline.dto.EventResponse;
 import com.example.covidline.exception.GeneralException;
 import com.example.covidline.service.EventService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 @Validated
 @RequiredArgsConstructor
 @RequestMapping("/api")
@@ -44,7 +46,8 @@ public class APIEventController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/events")
-    public APIDataResponse<String> createEvent(@Validated @RequestBody EventRequest eventRequest) {
+    public APIDataResponse<String> createEvent(@RequestBody EventRequest eventRequest) {
+        log.debug("보고 싶은 값: {}", eventRequest);
         boolean result = eventService.createEvent(eventRequest.toDTO());
 
         return APIDataResponse.of(Boolean.toString(result));

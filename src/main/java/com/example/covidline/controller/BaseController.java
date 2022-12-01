@@ -6,9 +6,12 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.PostConstruct;
+
 @Controller
 public class BaseController {
     @GetMapping("/")
+    @PostConstruct
     public String root() {
         return "index";
     }
