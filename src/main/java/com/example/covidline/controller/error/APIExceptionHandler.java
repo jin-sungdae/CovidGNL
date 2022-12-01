@@ -6,7 +6,6 @@ import com.example.covidline.exception.GeneralException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -49,7 +48,13 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler {
                 ErrorCode.SPRING_BAD_REQUEST :
                 ErrorCode.SPRING_INTERNAL_ERROR;
 
-        return callSuperInternalExceptionHandler(ex, errorCode, headers, status, request);
+        return super.handleExceptionInternal(
+          ex,
+          APIErrorResponse.of(false, errorCode.getCode(), errorCode.getMessage(ex)),
+          headers,
+          status,
+          request
+        );
     }
 
     private ResponseEntity<Object> callSuperInternalExceptionHandler(Exception ex, ErrorCode errorCode, HttpHeaders headers, HttpStatus status, WebRequest request) {
