@@ -2,7 +2,6 @@ package com.example.covidline.controller.error;
 
 import com.example.covidline.constant.ErrorCode;
 import com.example.covidline.dto.APIErrorResponse;
-import com.example.covidline.exception.GeneralException;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

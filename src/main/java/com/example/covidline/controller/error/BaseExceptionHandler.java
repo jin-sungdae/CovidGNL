@@ -1,15 +1,12 @@
 package com.example.covidline.controller.error;
 
 import com.example.covidline.constant.ErrorCode;
-import com.example.covidline.dto.APIErrorResponse;
 import com.example.covidline.exception.GeneralException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 @ControllerAdvice

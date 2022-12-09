@@ -18,4 +18,9 @@ public class APIAuthController {
     public String login() {
         return "done.";
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
 }

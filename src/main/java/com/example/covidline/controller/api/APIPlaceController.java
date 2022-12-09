@@ -2,7 +2,6 @@ package com.example.covidline.controller.api;
 
 import com.example.covidline.constant.PlaceType;
 import com.example.covidline.dto.APIDataResponse;
-import com.example.covidline.dto.PlaceDTO;
 import com.example.covidline.dto.PlaceResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
