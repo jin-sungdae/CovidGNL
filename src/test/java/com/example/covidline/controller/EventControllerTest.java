@@ -31,7 +31,7 @@ public class EventControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                 .andExpect(view().name("event/index"))
-                .andExpect(model().hasNoErrors())
+                .andExpect(model().hasNoErrors())   // error 가 있는지 없는지 확인 해줌
                 .andExpect(model().attributeExists("events"));
     }
 
