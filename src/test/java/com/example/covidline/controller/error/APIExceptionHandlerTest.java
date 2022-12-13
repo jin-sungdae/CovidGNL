@@ -13,7 +13,6 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.handler.DispatcherServletWebRequest;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
 import java.util.Set;
 
@@ -23,7 +22,6 @@ class APIExceptionHandlerTest {
 
     private APIExceptionHandler sut;
     private WebRequest webRequest;
-    private HttpServletRequest httpServletRequest;
 
     @BeforeEach
     void setUp() {

@@ -17,9 +17,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -129,7 +131,7 @@ class APIEventControllerTest {
        // Then
    }
 
-    @DisplayName("[API][POST] 이벤트 생성 - 잘못된 데이터 입력")
+    @DisplayName("[API][POST] 이벤트 생성 - 잘못된 정보 입력")
     @Test
     void givenWrongEvent_whenCreatingAnEvent_thenReturnsFailedStandardResponse() throws Exception {
         // Given
@@ -144,7 +146,7 @@ class APIEventControllerTest {
                 "마스크 꼭 착용하세요"
         );
 
-        // When
+        // When && Then
         mvc.perform(
                         post("/api/events")
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -155,15 +157,16 @@ class APIEventControllerTest {
                 .andExpect(jsonPath("$.success").value(false))
                 .andExpect(jsonPath("$.errorCode").value(ErrorCode.SPRING_BAD_REQUEST.getCode()))
                 .andExpect(jsonPath("$.message").value(containsString(ErrorCode.SPRING_BAD_REQUEST.getMessage())));
-        // Then
-        then(eventService).shouldHaveNoInteractions();
+
+       // then(eventService).shouldHaveNoInteractions();
     }
 
    @DisplayName("[API][GET] 단일 이벤트 조회 - 이벤트 있는 경우, 이벤트 데이터를 담은 표준 API 출력")
    @Test
    void givenEventId_whenRequestingExistentEvent_thenReturnsEventInStandardResponse() throws Exception{
         // Given
-        Long eventId = 1L;
+        long eventId = 1L;
+       given(eventService.getEvent(eventId)).willReturn(Optional.of(createEventDTO()));
 
 
         // When
@@ -176,19 +179,20 @@ class APIEventControllerTest {
                .andExpect(jsonPath("$.data.eventStatus").value(EventStatus.OPENED.name()))
                .andExpect(jsonPath("$.data.eventStartDatetime").value(LocalDateTime
                        .of(2021,1,1,13,0,0)
-                       .format(DateTimeFormatter.ISO_LOCAL_DATE)))
-               .andExpect(jsonPath("$.data[0].eventEndDatetime").value(LocalDateTime
+                       .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)))
+               .andExpect(jsonPath("$.data.eventEndDatetime").value(LocalDateTime
                        .of(2021,1,1,16,0,0)
                        .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)))
-               .andExpect(jsonPath("$.data[0].currentNumberOfPeople").value(0))
-               .andExpect(jsonPath("$.data[0].capacity").value(24))
-               .andExpect(jsonPath("$.data[0].memo").value("마스크 꼭 착용하세요"))
+               .andExpect(jsonPath("$.data.currentNumberOfPeople").value(0))
+               .andExpect(jsonPath("$.data.capacity").value(24))
+               .andExpect(jsonPath("$.data.memo").value("마스크 꼭 착용하세요"))
                .andExpect(jsonPath("$.success").value(true))
                .andExpect(jsonPath("$.errorCode").value(ErrorCode.OK.getCode()))
                .andExpect(jsonPath("$.message").value(ErrorCode.OK.getMessage()));
 
 
        // Then
+       then(eventService).should().getEvent(eventId);
 
    }
 
@@ -221,4 +225,5 @@ class APIEventControllerTest {
                 LocalDateTime.now()
         );
     }
+
 }
