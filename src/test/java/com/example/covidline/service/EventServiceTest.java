@@ -22,6 +22,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
+@DisplayName("서비스 - 이벤트 서비스 테스트")
 @ExtendWith(MockitoExtension.class)
 class EventServiceTest {
 

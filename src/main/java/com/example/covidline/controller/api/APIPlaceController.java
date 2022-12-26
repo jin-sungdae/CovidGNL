@@ -2,6 +2,7 @@ package com.example.covidline.controller.api;
 
 import com.example.covidline.constant.PlaceType;
 import com.example.covidline.dto.APIDataResponse;
+import com.example.covidline.dto.PlaceRequest;
 import com.example.covidline.dto.PlaceResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -34,10 +35,11 @@ public class APIPlaceController {
         )));
     }
 
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/places")
-    public Boolean createPlace() {
-        return true;
+    public APIDataResponse<Void> createPlace(@RequestBody PlaceRequest placeRequest) {
+        return APIDataResponse.empty();
     }
     
     @GetMapping("/places/{placeId}")

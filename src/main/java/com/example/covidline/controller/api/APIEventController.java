@@ -47,9 +47,7 @@ public class APIEventController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/events")
     public APIDataResponse<String> createEvent(@Validated @RequestBody EventRequest eventRequest) {
-        log.debug("보고 싶은 값: {}", eventRequest);
         boolean result = eventService.createEvent(eventRequest.toDTO());
-        log.debug("Result 값 : {}", result);
         return APIDataResponse.of(Boolean.toString(result));
     }
 

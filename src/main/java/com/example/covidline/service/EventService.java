@@ -28,7 +28,6 @@ public class EventService {
             LocalDateTime eventEndDatetime)
     {
         try {
-            log.debug("관찰 - placeId: {}", placeId);
             return eventRepository.findEvents(
                     placeId,
                     eventName,

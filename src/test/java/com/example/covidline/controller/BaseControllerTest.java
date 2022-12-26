@@ -14,6 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
+@DisplayName("컨트롤러 - Base 컨트롤러 테스트")
 @AutoConfigureMockMvc
 @SpringBootTest
 //@WebMvcTest(BaseController.class)

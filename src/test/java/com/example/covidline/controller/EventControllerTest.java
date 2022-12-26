@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@DisplayName("컨트롤러 - Event 컨트롤러 테스트")
 @AutoConfigureMockMvc
 @SpringBootTest
 public class EventControllerTest {

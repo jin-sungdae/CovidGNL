@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
+@DisplayName("에러 테스트")
 class ErrorCodeTest {
 
     @ParameterizedTest(name = "[{index}] {0} =====> {1}")

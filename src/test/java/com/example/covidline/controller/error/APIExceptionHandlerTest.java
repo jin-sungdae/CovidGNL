@@ -18,6 +18,7 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@DisplayName("Error- API 예외 헨들러 테스트")
 class APIExceptionHandlerTest {
 
     private APIExceptionHandler sut;
