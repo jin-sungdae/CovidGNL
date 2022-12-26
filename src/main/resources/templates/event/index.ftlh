@@ -25,13 +25,13 @@
         <#list events as event>
             <tr>
                 <td>${event.placeId()!"-"}</td>
-                <td>${event.placeId()!"-"}</td>
-                <td>${event.placeId()!"-"}</td>
-                <td>${event.placeId()!"-"}</td>
-                <td>${event.placeId()!"-"}</td>
-                <td>${event.placeId()!"-"}</td>
-                <td>${event.placeId()!"-"}</td>
-                <td><a href="">상세</a></td>
+                <td>${event.eventName()!"-"}</td>
+                <td>${event.eventStatus()!"-"}</td>
+                <td>${event.eventStartDatetime()!"-"}</td>
+                <td>${event.eventEndDatetime()!"-"}</td>
+                <td>${event.currentNumberOfPeople()!"-"}</td>
+                <td>${event.capacity()!"-"}</td>
+<#--                <td><a href="/events/${event.id()}">상세</a></td>-->
             </tr>
         </#list>
     </tbody>
